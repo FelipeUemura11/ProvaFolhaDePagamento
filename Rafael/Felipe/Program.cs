@@ -6,28 +6,38 @@ var app = builder.Build();
 
 app.MapPost("/api/folha/cadastrar", (AppDataContext ctx, Folha folhaNova) =>
 {
-    var folhaAntiga = ctx.Folhas.FirstOrDefault(f => f.Cpf == folhaNova.Cpf);
+    if (folhaNova.Mes < 1 || folhaNova.Mes > 12)
+    {
+        return Results.BadRequest("Mes deve estar entre 1 e 12");
+    }
+
+    if (folhaNova.Ano < 2000)
+    {
+        return Results.BadRequest("Ano deve ser maior ou igual a 2000");
+    }
+
+    var folhaAntiga = ctx.Folhas.FirstOrDefault(f => f.Cpf == folhaNova.Cpf && f.Mes == folhaNova.Mes && f.Ano == folhaNova.Ano);
 
     if (folhaAntiga is not null)
     {
-        return Results.NotFound("Folha com cpf ja existe");
+        return Results.Conflict("Ja existe folha para esse cpf, mes e ano");
     }
-   
+
     folhaNova.SalarioBruto = folhaNova.HorasTrabalhadas * folhaNova.ValorHora;
 
     if(folhaNova.SalarioBruto <= 1903.98)
     {
         folhaNova.ImpostoRenda = 0;
     }
-    if(folhaNova.SalarioBruto <= 2826.65)
+    else if(folhaNova.SalarioBruto <= 2826.65)
     {
         folhaNova.ImpostoRenda = (folhaNova.SalarioBruto * 0.075) - 142.80;
     }
-    if(folhaNova.SalarioBruto <= 3751.05)
+    else if(folhaNova.SalarioBruto <= 3751.05)
     {
         folhaNova.ImpostoRenda = (folhaNova.SalarioBruto * 0.15) - 354.80;
     }
-    if(folhaNova.SalarioBruto <= 4664.68)
+    else if(folhaNova.SalarioBruto <= 4664.68)
     {
         folhaNova.ImpostoRenda = (folhaNova.SalarioBruto * 0.255) - 636.13;
     }
@@ -40,11 +50,11 @@ app.MapPost("/api/folha/cadastrar", (AppDataContext ctx, Folha folhaNova) =>
     {
         folhaNova.Inss =folhaNova.SalarioBruto * 0.08;
     }
-    if(folhaNova.SalarioBruto <= 2822.90)
+    else if(folhaNova.SalarioBruto <= 2822.90)
     {
         folhaNova.Inss =folhaNova.SalarioBruto * 0.09;
     }
-    if(folhaNova.SalarioBruto <= 5645.80)
+    else if(folhaNova.SalarioBruto <= 5645.80)
     {
         folhaNova.Inss =folhaNova.SalarioBruto * 0.11;
     }
