@@ -1,0 +1,27 @@
+### RAIZ DO PROJETO 
+http://localhost:5235
+
+### Cadastro da folha de pagamento
+POST http://localhost:5235/api/folha/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Usuario",
+    "cpf": "999.999.999-99",
+    "mes": 10,
+    "ano": 2026,
+    "horasTrabalhadas": 140,
+    "valorHora": 40
+}
+
+### Listar folhas de pagamento
+GET http://localhost:5235/api/folha/listar
+
+### Buscar folha de pagamento
+GET http://localhost:5235/api/folha/buscar/999.999.999-99/10/2026
+
+### Remover folha de pagamento
+DELETE http://localhost:5235/api/folha/remover/999.999.999-98/10/2026
+
+### Total Liquido folhas de pagamento
+GET http://localhost:5235/api/folha/total-liquido

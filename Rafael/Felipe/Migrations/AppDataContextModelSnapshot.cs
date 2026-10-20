@@ -24,51 +24,41 @@ namespace Felipe.Migrations
                     b.Property<int>("Ano")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("FuncionarioId")
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Fgts")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("HorasTrabalhadas")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("ImpostoRenda")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Inss")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("Mes")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<double>("Valor")
+                    b.Property<double>("SalarioBruto")
                         .HasColumnType("REAL");
 
-                    b.HasKey("Id");
+                    b.Property<double>("SalarioLiquido")
+                        .HasColumnType("REAL");
 
-                    b.HasIndex("FuncionarioId");
-
-                    b.ToTable("Folhas");
-                });
-
-            modelBuilder.Entity("Funcionario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ValorHora")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CPF")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Funcionarios");
-                });
-
-            modelBuilder.Entity("Folha", b =>
-                {
-                    b.HasOne("Funcionario", "Funcionario")
-                        .WithMany()
-                        .HasForeignKey("FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Funcionario");
+                    b.ToTable("Folhas");
                 });
 #pragma warning restore 612, 618
         }
