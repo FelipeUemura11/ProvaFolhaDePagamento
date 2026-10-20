@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
     "nome": "Usuario",
-    "cpf": "999.999.999-99",
+    "cpf": "999.999.999-90",
     "mes": 10,
     "ano": 2026,
     "horasTrabalhadas": 140,
